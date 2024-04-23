@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
 
@@ -7,6 +7,7 @@ const Create = () => {
   const [name, setName] = useState("")
   const [desc, setDesc] = useState("")
   const [date, setDate] = useState("")
+  const navigate = useNavigate()
   const createTodo = async(e) => {
     e.preventDefault()
     const data = {
@@ -15,7 +16,14 @@ const Create = () => {
       date
     }
     axios.post('/api/createTodo', data)
-    .then(response => console.log(response))
+    .then(response => {
+      if(response){
+        // window.location.replace('/')
+        navigate('/')
+      }else{
+        alert("Something is Wrong")
+      }
+    })
   }
 
   return (
