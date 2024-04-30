@@ -7,6 +7,10 @@ use App\Models\ToDo;
 
 class ToDoListController extends Controller
 {
+    public function getTodos()
+    {
+        return ToDo::orderBy('created_at', 'desc')->get();
+    }
     public function create(Request $request)
     {
         $request->validate([

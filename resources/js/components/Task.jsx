@@ -1,7 +1,19 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const Task = () => {
+  const [todos, setTodos] = useState([])
+  const fetchTodos = async () => {
+    const response = await axios.get('/api/getTodo')
+    setTodos(response.data)
+  }
+  useEffect(() => {
+    fetchTodos()
+  }, [])
+
+  console.log(todos)
+
   return (
     <div className='container'>
       <div className="dflex justify-content-between align-items-center">
@@ -21,18 +33,20 @@ const Task = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className='align-middle'>
-              <td>a</td>
-              <td>b</td>
-              <td>c</td>
-              <td>d</td>
-              <td>
-                {/* <a href="/edit/1" className='btn btn-success m-2'>Edit</a>
-                <a href="" className='btn btn-danger m-2'>Delete</a> */}
-                <Link to="/edit/1" className='btn btn-success m-2'>Edit</Link>
-                <a href="" className='btn btn-danger m-2'>Delete</a>
-              </td>
-            </tr>
+            {
+              todos?.map((todo, index) => (
+                <tr key={todo.id} className='align-middle'>
+                  <td>{index + 1}</td>
+                  <td>{todo.name}</td>
+                  <td>{todo.description}</td>
+                  <td>{todo.created_at}</td>
+                  <td>
+                    <Link to="/edit/1" className='btn btn-success m-2'>Edit</Link>
+                    <a href="" className='btn btn-danger m-2'>Delete</a>
+                  </td>
+                </tr>
+              ))
+            }
           </tbody>
         </table>
       </div>
