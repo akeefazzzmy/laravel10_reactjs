@@ -12,6 +12,11 @@ class ToDoListController extends Controller
         return ToDo::orderBy('created_at', 'desc')->get();
     }
 
+    public function getTodoById($id)
+    {
+        return ToDo::find($id);
+    }
+
     public function create(Request $request)
     {
         $request->validate([
