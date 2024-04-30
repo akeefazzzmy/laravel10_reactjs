@@ -11,21 +11,22 @@ class ToDoListController extends Controller
     {
         return ToDo::orderBy('created_at', 'desc')->get();
     }
+
     public function create(Request $request)
     {
         $request->validate([
-            'name'=>'required',
-            'desc'=>'required',
-            'date'=>'required'
+            'name' => 'required',
+            'desc' => 'required',
+            'date' => 'required'
         ]);
         $createTodo = ToDo::create([
-            'name'=>$request->name,
-            'description'=>$request->desc,
-            'date_time'=>$request->date
+            'name' => $request->name,
+            'description' => $request->desc,
+            'date_time' => $request->date
         ]);
         if ($createTodo) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

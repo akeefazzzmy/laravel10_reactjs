@@ -41,7 +41,7 @@ const Task = () => {
                   <td>{todo.description}</td>
                   <td>{todo.created_at}</td>
                   <td>
-                    <Link to="/edit/1" className='btn btn-success m-2'>Edit</Link>
+                    <Link to={`/edit/${todo.id}`} className='btn btn-success m-2'>Edit</Link>
                     <a href="" className='btn btn-danger m-2'>Delete</a>
                   </td>
                 </tr>
