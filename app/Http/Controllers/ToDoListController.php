@@ -35,4 +35,21 @@ class ToDoListController extends Controller
             return false;
         }
     }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'todoId'=>'required',
+            'name'=>'required',
+            'desc'=>'required',
+            'date'=>'required'
+        ]);
+        $findTodo = ToDo::findOrFail($request->todoId);
+        $updateTodo = $findTodo->update([
+            'name'=>$request->name,
+            'description'=>$request->desc,
+            'date_time'=>$request->date
+        ]);
+        return true;
+    }
 }

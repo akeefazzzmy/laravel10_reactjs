@@ -12,13 +12,10 @@ const Task = () => {
     fetchTodos()
   }, [])
 
-  console.log(todos)
-
   return (
     <div className='container'>
       <div className="dflex justify-content-between align-items-center">
         <div className="h3">Display To Do</div>
-        {/* <a href="/create" className='btn btn-primary'>Add</a> */}
         <Link to="/create" className='btn btn-primary'>Add</Link>
       </div>
       <div className="table-responsive mt-5">

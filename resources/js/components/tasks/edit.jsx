@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 const edit = () => {
   const { todoId } = useParams()
@@ -8,6 +8,8 @@ const edit = () => {
   const [name, setName] = useState("")
   const [desc, setDesc] = useState("")
   const [date, setDate] = useState("")
+  const navigate = useNavigate();
+
   const fetchTodo = async () => {
     const response = await axios.get(`/api/getTodoById/${todoId}`)
     setName(response.data.name)
@@ -24,7 +26,12 @@ const edit = () => {
       desc,
       date
     }
-    console.log(details)
+    const result = await axios.post('/api/updateTodo', details)
+    if (result) {
+      navigate('/')
+    }else{
+      alert("Something went wrong")
+    }
   }
 
   return (
