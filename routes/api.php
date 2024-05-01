@@ -23,3 +23,4 @@ Route::post('/createTodo', [ToDoListController::class, 'create'])->name('todo.cr
 Route::post('/updateTodo', [ToDoListController::class, 'update'])->name('todo.update');
 Route::get('/getTodo', [ToDoListController::class, 'getTodos'])->name('todo.get');
 Route::get('/getTodoById/{id}', [ToDoListController::class, 'getTodoById'])->name('todo.getTodoById');
+Route::delete('/deleteTodo/{id}', [ToDoListController::class, 'deleteTodo'])->name('todo.delete');

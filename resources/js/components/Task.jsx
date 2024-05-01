@@ -1,12 +1,22 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 
 const Task = () => {
   const [todos, setTodos] = useState([])
+  const navigate = useNavigate()
   const fetchTodos = async () => {
     const response = await axios.get('/api/getTodo')
     setTodos(response.data)
+  }
+  const deleteTodo = async (id) => {
+    const confirmEvent = confirm('Are you sure?')
+    if (confirmEvent) {
+      const result = await axios.delete(`/api/deleteTodo/${id}`)
+      if (result) {
+        fetchTodos()
+      }
+    }
   }
   useEffect(() => {
     fetchTodos()
@@ -39,7 +49,7 @@ const Task = () => {
                   <td>{todo.created_at}</td>
                   <td>
                     <Link to={`/edit/${todo.id}`} className='btn btn-success m-2'>Edit</Link>
-                    <a href="" className='btn btn-danger m-2'>Delete</a>
+                    <a className='btn btn-danger m-2' onClick={() => deleteTodo(todo.id)}>Delete</a>
                   </td>
                 </tr>
               ))
