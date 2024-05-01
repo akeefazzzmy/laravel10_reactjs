@@ -4,11 +4,13 @@ import { Link, Navigate, useNavigate } from 'react-router-dom'
 
 const Task = () => {
   const [todos, setTodos] = useState([])
-  const navigate = useNavigate()
+  const [page, setPage] = useState(1)
+
   const fetchTodos = async () => {
-    const response = await axios.get('/api/getTodo')
+    const response = await axios.get('/api/getTodo?page='+page)
     setTodos(response.data)
   }
+
   const deleteTodo = async (id) => {
     const confirmEvent = confirm('Are you sure?')
     if (confirmEvent) {
@@ -18,9 +20,16 @@ const Task = () => {
       }
     }
   }
+
   useEffect(() => {
     fetchTodos()
-  }, [])
+  }, [page])
+
+  const paginatePage=async(link)=>{
+    const url = new URL(link)
+    console.log(url.searchParams.get('page'))
+    setPage(url.searchParams.get('page'))
+  }
 
   return (
     <div className='container'>
@@ -41,7 +50,7 @@ const Task = () => {
           </thead>
           <tbody>
             {
-              todos?.map((todo, index) => (
+              todos.data?.map((todo, index) => (
                 <tr key={todo.id} className='align-middle'>
                   <td>{index + 1}</td>
                   <td>{todo.name}</td>
@@ -56,6 +65,15 @@ const Task = () => {
             }
           </tbody>
         </table>
+        <div className="d-flex justify-content-end">
+          <nav aria-label="Page navigation example">
+            <ul className="pagination">
+              {todos.links?.map(link=>(
+                <li onClick={()=>paginatePage(link.url)} style={{cursor:'pointer'}} className={`page-item ${link.active?'active':''}`}><a className="page-link">{link.label.replace('&laquo;', '<').replace('&raquo;', '>')}</a></li>
+              ))}
+            </ul>
+          </nav>
+        </div>
       </div>
     </div>
   )

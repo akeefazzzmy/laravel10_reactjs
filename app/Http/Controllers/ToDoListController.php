@@ -9,7 +9,7 @@ class ToDoListController extends Controller
 {
     public function getTodos()
     {
-        return ToDo::orderBy('created_at', 'desc')->get();
+        return ToDo::orderBy('created_at', 'desc')->paginate(10);
     }
 
     public function getTodoById($id)

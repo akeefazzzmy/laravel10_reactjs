@@ -16,6 +16,6 @@ class TodoSeeder extends Seeder
     public function run()
     {
         // Use the factory to create fake todos
-        Todo::factory()->count(10)->create();
+        Todo::factory()->count(50)->create();
     }
 }
